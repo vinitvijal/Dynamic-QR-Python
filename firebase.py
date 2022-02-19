@@ -12,3 +12,26 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
+
+storage = firebase.storage()
+auth = firebase.auth()
+
+user = auth.sign_in_with_email_and_password('vinitvijal@gmail.com', 'password')
+token = user['localId']
+# print(user)
+
+def upload_doc():
+    file = eval(input('Your File : '))
+    abc = file[-15:]
+    storage.child("doc/"+abc).put(file)
+    file_link = storage.child("doc/"+abc, ).get_url(token)
+    print(file_link)
+
+upload_doc()      
+
+
+# abc = ''
+# # as admin
+# storage.child("images/%s"abc).put("%s"abc)
+# # as user
+# storage.child("images/example.jpg").put("example2.jpg", user['idToken'])
